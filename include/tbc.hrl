@@ -1,10 +1,81 @@
 -ifndef(tbc).
 -define(tbc,true).
 
+-type answer_callback_query_optionals() :: map().
+% -type answer_callback_query_optionals() :: #{
+%     <<"text"> => undefined | binary(),
+%     <<"show_alert"> => undefined | boolean(),
+%     <<"url"> => undefined | binary(),
+%     <<"cache_time"> => undefined | integer()
+% }.
+
+-type api_response(_Type) :: map().
+% -type api_response(Type) :: #{
+%     <<"ok">> => boolean(),
+%     <<"result">> => undefined | Type,
+%     <<"description">> => undefined | binary(),
+%     <<"error_code">> => undefined | integer(),
+%     <<"parameters">> => undefined | response_parameters()
+% }.
+
 -type ban_chat_member_optionals() :: map().
 % -type ban_chat_member_optionals() :: #{
 %     <<"until_date">> => undefined | integer(),
 %     <<"revoke_messages">> => undefined | boolean()
+% }.
+
+-type bot_command() :: map().
+% -type bot_command() :: #{
+%     <<"command">> => binary(),
+%     <<"description">> => binary()
+% }.
+
+-type bot_command_scope() :: 
+    bot_command_scope_default()
+    | bot_command_scope_all_private_chats()
+    | bot_command_scope_all_group_chats()
+    | bot_command_scope_all_chat_administrators()
+    | bot_command_scope_chat()
+    | bot_command_scope_chat_administrators()
+    | bot_command_scope_chat_member().
+
+-type bot_command_scope_default() :: map().
+% -type bot_command_scope_default() :: #{
+%     <<"type">> => <<"default">>
+% }.
+
+-type bot_command_scope_all_private_chats() :: map().
+% -type bot_command_scope_all_private_chats() :: #{
+%     <<"type">> => <<"all_private_chats">>
+% }.
+
+-type bot_command_scope_all_group_chats() :: map().
+% -type bot_command_scope_all_group_chats() :: #{
+%     <<"type">> => <<"all_group_chats">>
+% }.
+
+-type bot_command_scope_all_chat_administrators() :: map().
+% -type bot_command_scope_all_chat_administrators() :: #{
+%     <<"type">> => <<"all_chat_administrators">>
+% }.
+
+-type bot_command_scope_chat() :: map().
+% -type bot_command_scope_chat() :: #{
+%     <<"type">> => <<"chat">>,
+%     <<"chat_id">> => chat_id()
+% }.
+
+-type bot_command_scope_chat_administrators() :: map().
+% -type bot_command_scope_chat_administrators() :: #{
+%     <<"type">> => <<"chat_administrators">>,
+%     <<"chat_id">> => chat_id()
+% }.
+
+-type bot_command_scope_chat_member() :: map().
+% -type bot_command_scope_chat_member() :: #{
+%     <<"type">> => <<"chat_member">>,
+%     <<"chat_id">> => chat_id(),
+%     <<"user_id">> => integer()
 % }.
 
 -type callback_game() :: map().
@@ -238,6 +309,29 @@
 %     <<"creates_join_request">> => undefined | boolean()
 % }.
 
+-type create_forum_topic_optionals() :: map().
+% -type create_forum_topic_optionals() :: #{
+%     <<"icon_color">> => undefined | integer(),
+%     <<"icon_custom_emoji_id">> => undefined | binary()
+% }.
+
+-type get_my_commands_optionals() :: map().
+% -type get_my_commands_optionals() :: #{
+%     <<"scope">> => undefined | bot_command_scope(),
+%     <<"language_code">> => undefined | binary()
+% }.
+
+-type get_my_default_administrator_rights_optionals() :: map().
+% -type get_my_default_administrator_rights_optionals() :: #{
+%     <<"for_channels">> => undefined | boolean()
+% }.
+
+-type edit_forum_topic_optionals() :: map().
+% -type edit_forum_topic_optionals() :: #{
+%     <<"name">> => undefined | binary(),
+%     <<"icon_custom_emoji_id">> => undefined | binary()
+% }.
+
 -type edit_message_live_location_optionals() :: map().
 % -type edit_message_live_location_optionals() :: #{
 %     <<"chat_id">> => undefined | integer() | binary(),
@@ -264,11 +358,24 @@
 %     <<"selective">> => undefined | boolean()
 % }.
 
+-type forum_topic() :: map().
+% -type forum_topic() :: #{
+%     <<"message_thread_id">> => integer(),
+%     <<"name">> => binary(),
+%     <<"icon_color">> => integer(),
+%     <<"icon_custom_emoji_id">> => undefined | binary()
+% }.
+
 -type forward_message_optionals() :: map().
 % -type forward_message_optionals() :: #{
 %     <<"message_thread_id">> => undefined | integer(),
 %     <<"disable_notification">> => undefined | boolean(),
 %     <<"protect_content">> => undefined | boolean()
+% }.
+
+-type get_chat_menu_button_optionals() :: map().
+% -type get_chat_menu_button_optionals() :: #{
+%     <<"chat_id">> => undefined | chat_id()
 % }.
 
 -type get_updates_optionals() :: map().
@@ -436,6 +543,36 @@
 %     <<"request_write_access">> => undefined | boolean()
 % }.
 
+-type mask_position() :: map().
+% -type mask_position() :: #{
+%     <<"point">> => binary(),
+%     <<"x_shift">> => float(),
+%     <<"y_shift">> => float(),
+%     <<"scale">> => float()
+% }.
+
+-type menu_button() :: 
+    menu_button_commands()
+    | menu_button_web_app()
+    | menu_button_default().
+
+-type menu_button_commands() :: map().
+% -type menu_button_commands :: #{
+%     <<"type">> => <<"commands">>
+% }.
+
+-type menu_button_default() :: map().
+% -type menu_button_default :: #{
+%     <<"type">> => <<"default">>
+% }.
+
+-type menu_button_web_app() :: map().
+% -type menu_button_web_app() :: #{
+%     <<"type">> => <<"web_app">>,
+%     <<"text">> => binary(),
+%     <<"web_app">> => web_app_info()
+% }.
+
 -type message() :: map().
 % -type message() :: #{
 %     <<"chat_id">> => chat_id(),
@@ -580,6 +717,12 @@
 % -type reply_keyboard_remove() :: #{
 %     <<"remove_keyboard">> => boolean(),
 %     <<"selective">> => undefined | boolean()
+% }.
+
+-type response_parameters() :: map().
+% -type response_parameters() :: #{
+%     <<"migrate_to_chat_id">> => undefined | integer(),
+%     <<"retry_after">> => undefined | integer()
 % }.
 
 -type restrict_chat_member_optionals() :: map().
@@ -806,6 +949,18 @@
 %     <<"use_independent_chat_permissions">> => undefined | boolean()
 % }.
 
+-type set_my_commands_optionals() :: map().
+% -type set_my_commands_optionals() :: #{
+%     <<"scope">> => undefined | bot_command_scope(),
+%     <<"language_code">> => undefined | binary()
+% }.
+
+-type set_my_default_administrator_rights_optionals() :: map().
+% -type set_my_default_administrator_rights_optionals() :: #{
+%     <<"rights">> => undefined | chat_administrator_rights(),
+%     <<"for_channels">> => undefined | boolean()
+% }.
+
 -type shipping_address() :: map().
 % -type shipping_address() :: #{
 %     <<"country_code">> => binary(),
@@ -824,6 +979,24 @@
 %     <<"shipping_address">> => shipping_address()
 % }.
 
+-type sticker() :: map().
+% -type sticker() :: #{
+%     <<"field_id">> => binary(),
+%     <<"file_unique_id">> => binary(),
+%     <<"type">> => binary(),
+%     <<"width">> => integer(),
+%     <<"height">> => integer(),
+%     <<"is_animated">> => boolean(),
+%     <<"is_video">> => boolean(),
+%     <<"thumb">> => undefined | photo_size(),
+%     <<"emoji">> => undefined | bianry(),
+%     <<"set_name">> => undefined | binary(),
+%     <<"premium_animation">> => undefined | file(),
+%     <<"mask_position">> => undefined | mask_position(),
+%     <<"custom_emoji_id">> => undefined | binary(),
+%     <<"file_size">> => undefined | integer()
+% }.
+
 -type stop_message_live_location_optionals() :: map().
 % -type stop_message_live_location_optionals() :: #{
 %     <<"chat_id">> => undefined | integer() | binary(),
@@ -831,6 +1004,10 @@
 %     <<"inline_message_id">> => undefined | binary(),
 %     <<"reply_markup">> => undefined | inline_keyboard_markup()
 % }.
+
+-type tbc_response(Type) :: {ok, api_response(Type)} | {error, any()} | not_implemented_yet.
+
+-type token() :: [0..255].
 
 -type unban_chat_member_optionals() :: map().
 % -type unban_chat_member_optionals() :: #{

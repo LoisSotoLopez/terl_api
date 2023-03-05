@@ -1,8 +1,8 @@
-{application, telegram_bot_client,
+{application, tbc,
  [{description, "An OTP application"},
   {vsn, "0.1.0"},
   {registered, []},
-  {mod, {telegram_bot_client, []}},
+  {mod, {tbc, []}},
   {applications,
    [kernel,
     stdlib
