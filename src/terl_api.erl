@@ -1,6 +1,6 @@
--module(tbc).
+-module(terl_api).
 
--include("tbc.hrl").
+-include("terl_api.hrl").
 
 -include_lib("kernel/include/logger.hrl").
 
@@ -85,20 +85,20 @@
 %%% ---------------------------------------------
 -spec get_me(Token) -> Resp when
     Token :: token(),
-    Resp :: tbc_response(user()).
+    Resp :: terl_api_response(user()).
 get_me(Token) ->
     Params = #{},
     send(Token, "getMe", Params).
 
 -spec log_out(Token) -> Resp when
     Token :: token(),
-    Resp :: tbc_response(boolean()).
+    Resp :: terl_api_response(boolean()).
 log_out(_Token) ->
     not_implemented_yet.
 
 -spec close(Token) -> Resp when
     Token :: token(),
-    Resp :: tbc_response(boolean()). 
+    Resp :: terl_api_response(boolean()). 
 close(_Token) ->
     not_implemented_yet.
     
@@ -107,7 +107,7 @@ close(_Token) ->
     ChatId :: chat_id(),
     Text :: binary(),
     Optionals :: send_message_optionals(),
-    Resp :: tbc_response(message()).
+    Resp :: terl_api_response(message()).
 send_message(Token, ChatId, Text, Optionals) when is_binary(Text) ->
     Params0 = #{
         <<"chat_id">> => ChatId,
@@ -122,7 +122,7 @@ send_message(Token, ChatId, Text, Optionals) when is_binary(Text) ->
     FromChatId :: chat_id(),
     MessageId :: integer(),
     Optionals :: forward_message_optionals(),
-    Resp :: tbc_response(message()).
+    Resp :: terl_api_response(message()).
 forward_message(Token, ChatId, FromChatId, MessageId, Optionals) ->
     Params0 = #{
         <<"chat_id">> => ChatId,
@@ -138,7 +138,7 @@ forward_message(Token, ChatId, FromChatId, MessageId, Optionals) ->
     FromChatId :: chat_id(),
     MessageId :: integer(),
     Optionals :: copy_message_optionals(),
-    Resp :: tbc_response(message_id()).
+    Resp :: terl_api_response(message_id()).
 
 copy_message(Token, ChatId, FromChatId, MessageId, Optionals) -> 
     Params0 = #{
@@ -154,7 +154,7 @@ copy_message(Token, ChatId, FromChatId, MessageId, Optionals) ->
     ChatId :: chat_id(),
     Photo :: binary() | input_file(),
     Optionals :: send_photo_optionals(),
-    Resp :: tbc_response(message()).
+    Resp :: terl_api_response(message()).
 send_photo(Token, ChatId, Photo, Optionals) -> 
     Params0 = #{
         <<"chat_id">> => ChatId,
@@ -168,7 +168,7 @@ send_photo(Token, ChatId, Photo, Optionals) ->
     ChatId :: chat_id(),
     Audio :: binary() | input_file(),
     Optionals :: send_audio_optionals(),
-    Resp :: tbc_response(message()).
+    Resp :: terl_api_response(message()).
 send_audio(Token, ChatId, Audio, Optionals) ->
     Params0 = #{
         <<"chat_id">> => ChatId,
@@ -182,7 +182,7 @@ send_audio(Token, ChatId, Audio, Optionals) ->
     ChatId :: chat_id(),
     Document :: binary() | input_file(),
     Optionals :: send_document_optionals(),
-    Resp :: tbc_response(message()).
+    Resp :: terl_api_response(message()).
 send_document(Token, ChatId, Document, Optionals) ->
     Params0 = #{
         <<"chat_id">> => ChatId,
@@ -196,7 +196,7 @@ send_document(Token, ChatId, Document, Optionals) ->
     ChatId :: chat_id(),
     Video :: binary(),
     Optionals :: send_video_optionals(),
-    Resp :: tbc_response(message()).
+    Resp :: terl_api_response(message()).
 send_video(Token, ChatId, Video, Optionals) ->
     Params0 = #{
         <<"chat_id">> => ChatId,
@@ -210,7 +210,7 @@ send_video(Token, ChatId, Video, Optionals) ->
     ChatId :: chat_id(),
     Animation :: binary() | input_file(),
     Optionals :: send_animation_optionals(),
-    Resp :: tbc_response(message()).
+    Resp :: terl_api_response(message()).
 send_animation(Token, ChatId, Animation, Optionals) ->
     Params0 = #{
         <<"chat_id">> => ChatId,
@@ -224,7 +224,7 @@ send_animation(Token, ChatId, Animation, Optionals) ->
     ChatId :: chat_id(),
     Voice :: binary() | input_file(),
     Optionals :: send_voice_optionals(),
-    Resp :: tbc_response(message()).
+    Resp :: terl_api_response(message()).
 send_voice(Token, ChatId, Voice, Optionals) ->
     Params0 = #{
         <<"chat_id">> => ChatId,
@@ -238,7 +238,7 @@ send_voice(Token, ChatId, Voice, Optionals) ->
     ChatId :: chat_id(),
     VideoNote :: binary() | input_file(),
     Optionals :: send_video_note_optionals(),
-    Resp :: tbc_response(message()).
+    Resp :: terl_api_response(message()).
 send_video_note(Token, ChatId, VideoNote, Optionals) ->
     Params0 = #{
         <<"chat_id">> => ChatId,
@@ -252,7 +252,7 @@ send_video_note(Token, ChatId, VideoNote, Optionals) ->
     ChatId :: chat_id(),
     Media :: [input_media()],
     Optionals :: send_media_group_optionals(),
-    Resp :: tbc_response(message()).
+    Resp :: terl_api_response(message()).
 send_media_group(Token, ChatId, Media, Optionals) ->
     Params0 = #{
         <<"chat_id">> => ChatId,
@@ -267,7 +267,7 @@ send_media_group(Token, ChatId, Media, Optionals) ->
     Latitude :: float(),
     Longitude :: float(),
     Optionals :: send_location_optionals(),
-    Resp :: tbc_response(message()).
+    Resp :: terl_api_response(message()).
 send_location(Token, ChatId, Latitude, Longitude, Optionals) -> 
     Params0 = #{
         <<"chat_id">> => ChatId,
@@ -282,7 +282,7 @@ send_location(Token, ChatId, Latitude, Longitude, Optionals) ->
     Latitude :: float(),
     Longitude :: float(),
     Optionals :: edit_message_live_location_optionals(),
-    Resp :: true | tbc_response(message()).
+    Resp :: true | terl_api_response(message()).
 edit_message_live_location(Token, Latitude, Longitude, Optionals) ->
     Params0 = #{
         <<"latitude">> => Latitude,
@@ -294,7 +294,7 @@ edit_message_live_location(Token, Latitude, Longitude, Optionals) ->
 -spec stop_message_live_location(Token, Optionals) -> Resp when
     Token :: token(),
     Optionals :: stop_message_live_location_optionals(),
-    Resp :: true | tbc_response(message()).
+    Resp :: true | terl_api_response(message()).
 stop_message_live_location(Token, Optionals) ->
     send(Token, "stopMessageLiveLocation", Optionals).
 
@@ -306,7 +306,7 @@ stop_message_live_location(Token, Optionals) ->
     Title :: binary(),
     Address :: binary(),
     Optionals :: send_venue_optionals(),
-    Resp :: tbc_response(message()).
+    Resp :: terl_api_response(message()).
 send_venue(Token, ChatId, Latitude, Longitude, Title, Address, Optionals) ->
     Params0 = #{
         <<"chat_id">> => ChatId,
@@ -324,7 +324,7 @@ send_venue(Token, ChatId, Latitude, Longitude, Title, Address, Optionals) ->
     PhoneNumber :: binary(),
     FirstName :: binary(),
     Optionals :: send_contact_optionals(),
-    Resp :: tbc_response(message()).
+    Resp :: terl_api_response(message()).
 send_contact(Token, ChatId, PhoneNumber, FirstName, Optionals) ->
     Params0 = #{
         <<"chat_id">> => ChatId,
@@ -340,7 +340,7 @@ send_contact(Token, ChatId, PhoneNumber, FirstName, Optionals) ->
     Question :: binary(),
     Options :: [binary()],
     Optionals :: send_poll_optionals(),
-    Resp :: tbc_response(message()).
+    Resp :: terl_api_response(message()).
 send_poll(Token, ChatId, Question, Options, Optionals) -> 
     Params0 = #{
         <<"chat_id">> => ChatId,
@@ -354,7 +354,7 @@ send_poll(Token, ChatId, Question, Options, Optionals) ->
     Token :: token(),
     ChatId :: chat_id(),
     Optionals :: send_dice_optionals(),
-    Resp :: tbc_response(message()).
+    Resp :: terl_api_response(message()).
 send_dice(Token, ChatId, Optionals) ->
     Params0 = #{
         <<"chat_id">> => ChatId
@@ -367,7 +367,7 @@ send_dice(Token, ChatId, Optionals) ->
     ChatId :: chat_id(),
     Action :: binary(),
     Optionals :: send_chat_action_optionals(),
-    Resp :: tbc_response(true).
+    Resp :: terl_api_response(true).
 send_chat_action(Token, ChatId, Action, Optionals) ->
     Params0 = #{
         <<"chat_id">> => ChatId,
@@ -380,7 +380,7 @@ send_chat_action(Token, ChatId, Action, Optionals) ->
     Token :: token(),
     UserId :: user_id(),
     Optionals :: get_user_profile_photos_optionals(),
-    Resp :: tbc_response(user_profile_photos()).
+    Resp :: terl_api_response(user_profile_photos()).
 get_user_profile_photos(Token, UserId, Optionals) ->
     Params0 = #{
         <<"user_id">> => UserId
@@ -391,7 +391,7 @@ get_user_profile_photos(Token, UserId, Optionals) ->
 -spec get_file(Token, FileId) -> Resp when
     Token :: token(),
     FileId :: binary(),
-    Resp :: tbc_response(file()).
+    Resp :: terl_api_response(file()).
 get_file(Token, FileId) ->
     Params = #{
         <<"file_id">> => FileId
@@ -403,7 +403,7 @@ get_file(Token, FileId) ->
     ChatId :: chat_id(),
     UserId :: user_id(),
     Optionals :: ban_chat_member_optionals(),
-    Resp :: tbc_response(true).
+    Resp :: terl_api_response(true).
 ban_chat_member(Token, ChatId, UserId, Optionals) ->
     Params0 = #{
         <<"chat_id">> => ChatId,
@@ -417,7 +417,7 @@ ban_chat_member(Token, ChatId, UserId, Optionals) ->
     ChatId :: chat_id(),
     UserId :: user_id(),
     Optionals :: unban_chat_member_optionals(),
-    Resp :: tbc_response(true).
+    Resp :: terl_api_response(true).
 unban_chat_member(Token, ChatId, UserId, Optionals) ->
     Params0 = #{
         <<"chat_id">> => ChatId,
@@ -432,7 +432,7 @@ unban_chat_member(Token, ChatId, UserId, Optionals) ->
     UserId :: user_id(),
     Permissions :: chat_permissions(),
     Optionals :: restrict_chat_member_optionals(),
-    Resp :: tbc_response(true).
+    Resp :: terl_api_response(true).
 restrict_chat_member(Token, ChatId, UserId, Permissions, Optionals) ->
     Params0 = #{
         <<"chat_id">> => ChatId,
@@ -447,7 +447,7 @@ restrict_chat_member(Token, ChatId, UserId, Permissions, Optionals) ->
     ChatId :: chat_id(),
     UserId :: user_id(),
     Optionals :: promote_chat_member_optionals(),
-    Resp :: tbc_response(true).
+    Resp :: terl_api_response(true).
 promote_chat_member(Token, ChatId, UserId, Optionals) ->
     Params0 = #{
         <<"chat_id">> => ChatId,
@@ -461,7 +461,7 @@ promote_chat_member(Token, ChatId, UserId, Optionals) ->
     ChatId :: chat_id(),
     UserId :: user_id(),
     CustomTitle :: binary(),
-    Resp :: tbc_response(true).
+    Resp :: terl_api_response(true).
 set_chat_administrator_custom_title(Token, ChatId, UserId, CustomTitle) ->
     Params = #{
         <<"chat_id">> => ChatId,
@@ -474,7 +474,7 @@ set_chat_administrator_custom_title(Token, ChatId, UserId, CustomTitle) ->
     Token :: token(),
     ChatId :: chat_id(),
     SenderChatId :: integer(),
-    Resp :: tbc_response(true).
+    Resp :: terl_api_response(true).
 ban_chat_sender_chat(Token, ChatId, SenderChatId) ->
     Params = #{
         <<"chat_id">> => ChatId,
@@ -486,7 +486,7 @@ ban_chat_sender_chat(Token, ChatId, SenderChatId) ->
     Token :: token(),
     ChatId :: chat_id(),
     SenderChatId :: integer(),
-    Resp :: tbc_response(true).
+    Resp :: terl_api_response(true).
 unban_chat_sender_chat(Token, ChatId, SenderChatId) ->
     Params = #{
         <<"chat_id">> => ChatId,
@@ -499,7 +499,7 @@ unban_chat_sender_chat(Token, ChatId, SenderChatId) ->
     ChatId :: chat_id(),
     Permissions :: chat_permissions(),
     Optionals :: set_chat_permissions_optionals(),
-    Resp :: tbc_response(true).
+    Resp :: terl_api_response(true).
 set_chat_permissions(Token, ChatId, Permissions, Optionals) ->
     Params0 = #{
         <<"chat_id">> => ChatId,
@@ -511,7 +511,7 @@ set_chat_permissions(Token, ChatId, Permissions, Optionals) ->
 -spec export_chat_invite_link(Token, ChatId) -> Resp when
     Token :: token(),
     ChatId :: chat_id(),
-    Resp :: tbc_response(binary()).
+    Resp :: terl_api_response(binary()).
 export_chat_invite_link(Token, ChatId) ->
     Params = #{
         <<"chat_id">> => ChatId
@@ -523,7 +523,7 @@ export_chat_invite_link(Token, ChatId) ->
     Token :: token(),
     ChatId :: chat_id(),
     Optionals :: create_chat_invite_link_optionals(),
-    Resp :: tbc_response(chat_invite_link()).
+    Resp :: terl_api_response(chat_invite_link()).
 create_chat_invite_link(Token, ChatId, Optionals) ->
     Params0 = #{
         <<"chat_id">> => ChatId
@@ -536,7 +536,7 @@ create_chat_invite_link(Token, ChatId, Optionals) ->
     ChatId :: chat_id(),
     InviteLink :: binary(),
     Optionals :: create_chat_invite_link_optionals(),
-    Resp :: tbc_response(chat_invite_link()).
+    Resp :: terl_api_response(chat_invite_link()).
 edit_chat_invite_link(Token, ChatId, InviteLink, Optionals) ->
     Params0 = #{
         <<"chat_id">> => ChatId,
@@ -549,7 +549,7 @@ edit_chat_invite_link(Token, ChatId, InviteLink, Optionals) ->
     Token :: token(),
     ChatId :: chat_id(),
     InviteLink :: binary(),
-    Resp :: tbc_response(chat_invite_link()).
+    Resp :: terl_api_response(chat_invite_link()).
 revoke_chat_invite_link(Token, ChatId, InviteLink) ->
     Params = #{
         <<"chat_id">> => ChatId,
@@ -561,7 +561,7 @@ revoke_chat_invite_link(Token, ChatId, InviteLink) ->
     Token :: token(),
     ChatId :: chat_id(),
     UserId :: user_id(),
-    Resp :: tbc_response(true).
+    Resp :: terl_api_response(true).
 approve_chat_join_request(Token, ChatId, UserId) ->
     Params = #{
         <<"chat_id">> => ChatId,
@@ -573,7 +573,7 @@ approve_chat_join_request(Token, ChatId, UserId) ->
     Token :: token(),
     ChatId :: chat_id(),
     UserId :: user_id(),
-    Resp :: tbc_response(true).
+    Resp :: terl_api_response(true).
 decline_chat_join_request(Token, ChatId, UserId) ->
     Params = #{
         <<"chat_id">> => ChatId,
@@ -585,7 +585,7 @@ decline_chat_join_request(Token, ChatId, UserId) ->
     Token :: token(),
     ChatId :: chat_id(),
     Photo :: input_file(),
-    Resp :: tbc_response(true).
+    Resp :: terl_api_response(true).
 set_chat_photo(Token, ChatId, Photo) ->
     Params = #{
         <<"chat_id">> => ChatId,
@@ -596,7 +596,7 @@ set_chat_photo(Token, ChatId, Photo) ->
 -spec delete_chat_photo(Token, ChatId) -> Resp when
     Token :: token(),
     ChatId :: chat_id(),
-    Resp :: tbc_response(true).
+    Resp :: terl_api_response(true).
 delete_chat_photo(Token, ChatId) ->
     Params = #{
         <<"chat_id">> => ChatId
@@ -607,7 +607,7 @@ delete_chat_photo(Token, ChatId) ->
     Token :: token(),
     ChatId :: chat_id(),
     Title :: binary(),
-    Resp :: tbc_response(true).
+    Resp :: terl_api_response(true).
 set_chat_title(Token, ChatId, Title) ->
     Params = #{
         <<"chat_id">> => ChatId,
@@ -619,7 +619,7 @@ set_chat_title(Token, ChatId, Title) ->
     Token :: token(),
     ChatId :: chat_id(),
     Optionals :: set_chat_description_optionals(),
-    Resp :: tbc_response(true).
+    Resp :: terl_api_response(true).
 set_chat_description(Token, ChatId, Optionals) ->
     Params0 = #{
         <<"chat_id">> => ChatId
@@ -632,7 +632,7 @@ set_chat_description(Token, ChatId, Optionals) ->
     ChatId :: chat_id(),
     MessageId :: integer(),
     Optionals :: pin_chat_message_optionals(),
-    Resp :: tbc_response(true).
+    Resp :: terl_api_response(true).
 pin_chat_message(Token, ChatId, MessageId, Optionals) ->
     Params0 = #{
         <<"chat_id">> => ChatId,
@@ -645,7 +645,7 @@ pin_chat_message(Token, ChatId, MessageId, Optionals) ->
     Token :: token(),
     ChatId :: chat_id(),
     Optionals :: unpin_chat_message_optionals(),
-    Resp :: tbc_response(true).
+    Resp :: terl_api_response(true).
 unpin_chat_message(Token, ChatId, Optionals) ->
     Params0 = #{
         <<"chat_id">> => ChatId
@@ -656,7 +656,7 @@ unpin_chat_message(Token, ChatId, Optionals) ->
 -spec unpin_all_chat_message(Token, ChatId) -> Resp when
     Token :: token(),
     ChatId :: chat_id(),
-    Resp :: tbc_response(true).
+    Resp :: terl_api_response(true).
 unpin_all_chat_message(Token, ChatId) ->
     Params = #{
         <<"chat_id">> => ChatId
@@ -666,7 +666,7 @@ unpin_all_chat_message(Token, ChatId) ->
 -spec leave_chat(Token, ChatId) -> Resp when
     Token :: token(),
     ChatId :: chat_id(),
-    Resp :: tbc_response(true).
+    Resp :: terl_api_response(true).
 leave_chat(Token, ChatId) ->
     Params = #{
         <<"chat_id">> => ChatId
@@ -676,7 +676,7 @@ leave_chat(Token, ChatId) ->
 -spec get_chat(Token, ChatId) -> Resp when
     Token :: token(),
     ChatId :: chat_id(),
-    Resp :: tbc_response(chat()).
+    Resp :: terl_api_response(chat()).
 get_chat(Token, ChatId) ->
     Params = #{
         <<"chat_id">> => ChatId
@@ -686,7 +686,7 @@ get_chat(Token, ChatId) ->
 -spec get_chat_administrators(Token, ChatId) -> Resp when
     Token :: token(),
     ChatId :: chat_id(),
-    Resp :: tbc_response([chat_member()]).
+    Resp :: terl_api_response([chat_member()]).
 get_chat_administrators(Token, ChatId) ->
     Params = #{
         <<"chat_id">> => ChatId
@@ -696,7 +696,7 @@ get_chat_administrators(Token, ChatId) ->
 -spec get_chat_member_count(Token, ChatId) -> Resp when
     Token :: token(),
     ChatId :: chat_id(),
-    Resp :: tbc_response(integer()).
+    Resp :: terl_api_response(integer()).
 get_chat_member_count(Token, ChatId) ->
     Params = #{
         <<"chat_id">> => ChatId
@@ -707,7 +707,7 @@ get_chat_member_count(Token, ChatId) ->
     Token :: token(),
     ChatId :: chat_id(),
     UserId :: user_id(),
-    Resp :: tbc_response(chat_member()).
+    Resp :: terl_api_response(chat_member()).
 get_chat_member(Token, ChatId, UserId) ->
     Params = #{
         <<"chat_id">> => ChatId,
@@ -719,7 +719,7 @@ get_chat_member(Token, ChatId, UserId) ->
     Token :: token(),
     ChatId :: chat_id(),
     StickerSetName :: binary(),
-    Resp :: tbc_response(boolean()).
+    Resp :: terl_api_response(boolean()).
 set_chat_sticker_set(Token, ChatId, StickerSetName) ->
     Params = #{
         <<"chat_id">> => ChatId,
@@ -730,7 +730,7 @@ set_chat_sticker_set(Token, ChatId, StickerSetName) ->
 -spec delete_chat_sticker_set(Token, ChatId) -> Resp when
     Token :: token(),
     ChatId :: chat_id(),
-    Resp :: tbc_response(true).
+    Resp :: terl_api_response(true).
 delete_chat_sticker_set(Token, ChatId) ->
     Params = #{
         <<"chat_id">> => ChatId
@@ -739,7 +739,7 @@ delete_chat_sticker_set(Token, ChatId) ->
 
 -spec get_forum_topic_icon_stickers(Token) -> Resp when
     Token :: token(),
-    Resp :: tbc_response([sticker()]).
+    Resp :: terl_api_response([sticker()]).
 get_forum_topic_icon_stickers(Token) ->
     send(Token, "getForumTopicIconStickers", #{}).
 
@@ -748,7 +748,7 @@ get_forum_topic_icon_stickers(Token) ->
     ChatId :: chat_id(),
     Name :: binary(),
     Optionals :: create_forum_topic_optionals(),
-    Resp :: tbc_response(forum_topic()).
+    Resp :: terl_api_response(forum_topic()).
 create_forum_topic(Token, ChatId, Name, Optionals) ->
     Params0 = #{
         <<"chat_id">> => ChatId,
@@ -762,7 +762,7 @@ create_forum_topic(Token, ChatId, Name, Optionals) ->
     ChatId :: chat_id(),
     MessageThreadId :: integer(),
     Optionals :: edit_forum_topic_optionals(),
-    Resp :: tbc_response(true).
+    Resp :: terl_api_response(true).
 edit_forum_topic(Token, ChatId, Name, Optionals) ->
     Params0 = #{
         <<"chat_id">> => ChatId,
@@ -775,7 +775,7 @@ edit_forum_topic(Token, ChatId, Name, Optionals) ->
     Token :: token(),
     ChatId :: chat_id(),
     MessageThreadId :: integer(),
-    Resp :: tbc_response(true).
+    Resp :: terl_api_response(true).
 close_forum_topic(Token, ChatId, MessageThreadId) ->
     Params = #{
         <<"chat_id">> => ChatId,
@@ -787,7 +787,7 @@ close_forum_topic(Token, ChatId, MessageThreadId) ->
     Token :: token(),
     ChatId :: chat_id(),
     MessageThreadId :: integer(),
-    Resp :: tbc_response(true).
+    Resp :: terl_api_response(true).
 reopen_forum_topic(Token, ChatId, MessageThreadId) ->
     Params = #{
         <<"chat_id">> => ChatId,
@@ -799,7 +799,7 @@ reopen_forum_topic(Token, ChatId, MessageThreadId) ->
     Token :: token(),
     ChatId :: chat_id(),
     MessageThreadId :: integer(),
-    Resp :: tbc_response(true).
+    Resp :: terl_api_response(true).
 delete_forum_topic(Token, ChatId, MessageThreadId) ->
     Params = #{
         <<"chat_id">> => ChatId,
@@ -811,7 +811,7 @@ delete_forum_topic(Token, ChatId, MessageThreadId) ->
     Token :: token(),
     ChatId :: chat_id(),
     MessageThreadId :: integer(),
-    Resp :: tbc_response(true).
+    Resp :: terl_api_response(true).
 unpin_all_forum_topic_messages(Token, ChatId, MessageThreadId) ->
     Params = #{
         <<"chat_id">> => ChatId,
@@ -823,7 +823,7 @@ unpin_all_forum_topic_messages(Token, ChatId, MessageThreadId) ->
     Token :: token(),
     ChatId :: chat_id(),
     Name :: binary(),
-    Resp :: tbc_response(true).
+    Resp :: terl_api_response(true).
 edit_general_forum_topic(Token, ChatId, MessageThreadId) ->
     Params = #{
         <<"chat_id">> => ChatId,
@@ -834,7 +834,7 @@ edit_general_forum_topic(Token, ChatId, MessageThreadId) ->
 -spec close_general_forum_topic(Token, ChatId) -> Resp when
     Token :: token(),
     ChatId :: chat_id(),
-    Resp :: tbc_response(true).
+    Resp :: terl_api_response(true).
 close_general_forum_topic(Token, ChatId) ->
     Params = #{
         <<"chat_id">> => ChatId
@@ -844,7 +844,7 @@ close_general_forum_topic(Token, ChatId) ->
 -spec reopen_general_forum_topic(Token, ChatId) -> Resp when
     Token :: token(),
     ChatId :: chat_id(),
-    Resp :: tbc_response(true).
+    Resp :: terl_api_response(true).
 reopen_general_forum_topic(Token, ChatId) ->
     Params = #{
         <<"chat_id">> => ChatId
@@ -854,7 +854,7 @@ reopen_general_forum_topic(Token, ChatId) ->
 -spec hide_general_forum_topic(Token, ChatId) -> Resp when
     Token :: token(),
     ChatId :: chat_id(),
-    Resp :: tbc_response(true).
+    Resp :: terl_api_response(true).
 hide_general_forum_topic(Token, ChatId) ->
     Params = #{
         <<"chat_id">> => ChatId
@@ -864,7 +864,7 @@ hide_general_forum_topic(Token, ChatId) ->
 -spec unhide_general_forum_topic(Token, ChatId) -> Resp when
     Token :: token(),
     ChatId :: chat_id(),
-    Resp :: tbc_response(true).
+    Resp :: terl_api_response(true).
 unhide_general_forum_topic(Token, ChatId) ->
     Params = #{
         <<"chat_id">> => ChatId
@@ -875,7 +875,7 @@ unhide_general_forum_topic(Token, ChatId) ->
     Token :: token(),
     CallbackQueryId :: chat_id(),
     Optionals :: answer_callback_query_optionals(),
-    Resp :: tbc_response(true).
+    Resp :: terl_api_response(true).
 answer_callback_query(Token, CallbackQueryId, Optionals) ->
     Params0 = #{
         <<"callback_query_id">> => CallbackQueryId
@@ -887,7 +887,7 @@ answer_callback_query(Token, CallbackQueryId, Optionals) ->
     Token :: token(),
     Commands :: [bot_command()],
     Optionals :: set_my_commands_optionals(),
-    Resp :: tbc_response(true).
+    Resp :: terl_api_response(true).
 set_my_commands(Token, Commands, Optionals) ->
     Params0 = #{
         <<"commands">> => Commands
@@ -898,42 +898,42 @@ set_my_commands(Token, Commands, Optionals) ->
 -spec delete_my_commands(Token, Optionals) -> Resp when
     Token :: token(),
     Optionals :: get_my_commands_optionals(),
-    Resp :: tbc_response(true).
+    Resp :: terl_api_response(true).
 delete_my_commands(Token, Optionals) ->
     send(Token, "deleteMyCommands", Optionals).
 
 -spec get_my_commands(Token, Optionals) -> Resp when
     Token :: token(),
     Optionals :: get_my_commands_optionals(),
-    Resp :: tbc_response([bot_command()]).
+    Resp :: terl_api_response([bot_command()]).
 get_my_commands(Token, Optionals) ->
     send(Token, "getMyCommands", Optionals).
 
 -spec get_chat_menu_button(Token, Optionals) -> Resp when
     Token :: token(),
     Optionals :: get_chat_menu_button_optionals(),
-    Resp :: tbc_response(menu_button()).
+    Resp :: terl_api_response(menu_button()).
 get_chat_menu_button(Token, Optionals) ->
     send(Token, "getChatMenuButton", Optionals).
 
 -spec set_my_default_administrator_rights(Token, Optionals) -> Resp when
     Token :: token(),
     Optionals :: set_my_default_administrator_rights_optionals(),
-    Resp :: tbc_response(true).
+    Resp :: terl_api_response(true).
 set_my_default_administrator_rights(Token, Optionals) ->
     send(Token, "setMyDefaultAdministratorRights", Optionals).
 
 -spec get_my_default_administrator_rights(Token, Optionals) -> Resp when
     Token :: token(),
     Optionals :: get_my_default_administrator_rights_optionals(),
-    Resp :: tbc_response(true).
+    Resp :: terl_api_response(true).
 get_my_default_administrator_rights(Token, Optionals) ->
     send(Token, "getMyDefaultAdministratorRights", Optionals).
 
 -spec get_updates(Token, Optionals) -> Resp when
     Token :: token(),
     Optionals :: get_updates_optionals(),
-    Resp :: tbc_response([update()]).
+    Resp :: terl_api_response([update()]).
 get_updates(Token, Optionals) ->
     send(Token, "getUpdates", Optionals).
 
@@ -953,7 +953,7 @@ send(Token, ApiMethod, Params) ->
         {ok, Result} ->
             {ok, handle_result(Result)};
         {error, Reason} = Err ->
-            ?LOG_ERROR("[tbc] HTTP call failed. Reason ~p",[Reason]),
+            ?LOG_ERROR("[terl_api] HTTP call failed. Reason ~p",[Reason]),
             Err
     end.
 

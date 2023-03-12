@@ -1,5 +1,5 @@
--ifndef(tbc).
--define(tbc,true).
+-ifndef(terl_api).
+-define(terl_api,true).
 
 -type answer_callback_query_optionals() :: map().
 % -type answer_callback_query_optionals() :: #{
@@ -1005,7 +1005,7 @@
 %     <<"reply_markup">> => undefined | inline_keyboard_markup()
 % }.
 
--type tbc_response(Type) :: {ok, api_response(Type)} | {error, any()} | not_implemented_yet.
+-type terl_api_response(Type) :: {ok, api_response(Type)} | {error, any()} | not_implemented_yet.
 
 -type token() :: [0..255].
 

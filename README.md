@@ -1,9 +1,5 @@
-telegram_bot_client
+terl_api
 =====
 
-An OTP application
+An Erlang wrapper for Telegram's HTTP bots API.
 
-Build
------
-
-    $ rebar3 compile

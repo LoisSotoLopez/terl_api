@@ -1,8 +1,8 @@
-{application, tbc,
+{application, terl_api,
  [{description, "An OTP application"},
   {vsn, "0.1.0"},
   {registered, []},
-  {mod, {tbc, []}},
+  {mod, {terl_api, []}},
   {applications,
    [kernel,
     stdlib
